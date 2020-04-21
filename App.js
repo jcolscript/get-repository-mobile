@@ -1,25 +1,7 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
+import React, { Component } from 'react';
+import { StyleSheet, View, Text } from 'react-native';
 
-import React, {Component} from 'react';
-import {StyleSheet, View, Text} from 'react-native';
-
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-
-export default class App extends Component {
-  render() {
-    return (
-      <View style={styles.body}>
-        <Text style={styles.sectionTitle}>Hello World</Text>
-      </View>
-    );
-  }
-}
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const styles = StyleSheet.create({
   body: {
@@ -34,3 +16,11 @@ const styles = StyleSheet.create({
     color: Colors.black,
   },
 });
+
+export default function App() {
+  return (
+    <View style={styles.body}>
+      <Text style={styles.sectionTitle}>Hello World</Text>
+    </View>
+  );
+}
