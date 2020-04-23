@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
+
+import './config/reactotron';
 
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
@@ -16,6 +18,8 @@ const styles = StyleSheet.create({
     color: Colors.black,
   },
 });
+
+console.tron.log('Hello World!');
 
 export default function App() {
   return (
