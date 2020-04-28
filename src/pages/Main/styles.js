@@ -44,7 +44,7 @@ export const List = styled(FlatList).attrs({
 
 export const User = styled.View`
   flex-direction: column;
-  border: 1px solid #bdbebd;
+  border: 1px solid #eee;
   padding: 15px 10px;
   border-radius: 4px;
   margin-top: 5px;
