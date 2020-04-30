@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { ActivityIndicator } from 'react-native';
 
 import api from '../../services/api';
 
@@ -28,19 +29,21 @@ export default class User extends Component {
 
   state = {
     repos: [],
+    loading: false,
   };
 
   async componentDidMount() {
+    this.setState({ loading: true });
     const { route } = this.props;
     const { user } = route.params;
 
     const response = await api.get(`/users/${user.login}/repos`);
 
-    this.setState({ repos: response.data });
+    this.setState({ repos: response.data, loading: false });
   }
 
   render() {
-    const { repos } = this.state;
+    const { repos, loading } = this.state;
     const { route } = this.props;
     const { user } = route.params;
 
@@ -52,19 +55,23 @@ export default class User extends Component {
           {user.bio && <Bio>{user.bio}</Bio>}
         </Header>
 
-        <Repos
-          data={repos}
-          keyExtractor={(repo) => String(repo.id)}
-          renderItem={({ item }) => (
-            <Repo>
-              <HeaderRepo>
-                <Icon name="collections-bookmark" size={20} color="#5063f0" />
-                <RepoName>{item.name}</RepoName>
-              </HeaderRepo>
-              <Info>{item.description}</Info>
-            </Repo>
-          )}
-        />
+        {loading ? (
+          <ActivityIndicator color="#5063f0" />
+        ) : (
+          <Repos
+            data={repos}
+            keyExtractor={(repo) => String(repo.id)}
+            renderItem={({ item }) => (
+              <Repo>
+                <HeaderRepo>
+                  <Icon name="collections-bookmark" size={20} color="#5063f0" />
+                  <RepoName>{item.name}</RepoName>
+                </HeaderRepo>
+                <Info>{item.description}</Info>
+              </Repo>
+            )}
+          />
+        )}
       </Container>
     );
   }
