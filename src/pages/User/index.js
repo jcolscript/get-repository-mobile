@@ -25,12 +25,14 @@ export default class User extends Component {
         user: PropTypes.shape().isRequired,
       }).isRequired,
     }).isRequired,
+    navigation: PropTypes.shape({
+      navigate: PropTypes.func,
+    }).isRequired,
   };
 
   state = {
     repos: [],
     loading: false,
-    page: 1,
   };
 
   async componentDidMount() {
@@ -43,17 +45,11 @@ export default class User extends Component {
     this.setState({ repos: response.data, loading: false });
   }
 
-  async loadMore() {
-    let { page } = this.state;
-    const { repos } = this.state;
-    const { route } = this.props;
-    const { user } = route.params;
-    page += 1;
+  handleNavigate = (repository) => {
+    const { navigation } = this.props;
 
-    const response = await api.get(`/users/${user.login}/repos?page=${page}`);
-
-    this.setState({ repos: [...repos, response.data], page });
-  }
+    navigation.navigate('Repo', { repository });
+  };
 
   render() {
     const { repos, loading } = this.state;
@@ -74,13 +70,13 @@ export default class User extends Component {
           <Repos
             data={repos}
             keyExtractor={(repo) => String(repo.id)}
-            onEndReachedThreshold={0.2}
-            onEndReached={this.loadMore}
             renderItem={({ item }) => (
               <Repo>
                 <HeaderRepo>
                   <Icon name="collections-bookmark" size={20} color="#5063f0" />
-                  <RepoName>{item.name}</RepoName>
+                  <RepoName onPress={() => this.handleNavigate(item)}>
+                    {item.name}
+                  </RepoName>
                 </HeaderRepo>
                 <Info>{item.description}</Info>
               </Repo>
