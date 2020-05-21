@@ -30,6 +30,7 @@ export default class User extends Component {
   state = {
     repos: [],
     loading: false,
+    page: 1,
   };
 
   async componentDidMount() {
@@ -40,6 +41,18 @@ export default class User extends Component {
     const response = await api.get(`/users/${user.login}/repos`);
 
     this.setState({ repos: response.data, loading: false });
+  }
+
+  async loadMore() {
+    let { page } = this.state;
+    const { repos } = this.state;
+    const { route } = this.props;
+    const { user } = route.params;
+    page += 1;
+
+    const response = await api.get(`/users/${user.login}/repos?page=${page}`);
+
+    this.setState({ repos: [...repos, response.data], page });
   }
 
   render() {
@@ -61,6 +74,8 @@ export default class User extends Component {
           <Repos
             data={repos}
             keyExtractor={(repo) => String(repo.id)}
+            onEndReachedThreshold={0.2}
+            onEndReached={this.loadMore}
             renderItem={({ item }) => (
               <Repo>
                 <HeaderRepo>
