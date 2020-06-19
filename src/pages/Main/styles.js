@@ -10,7 +10,7 @@ export const Container = styled.View`
 
 export const Form = styled.View`
   flex-direction: row;
-  padding-bottom: 20px;
+  padding-bottom: 5px;
   border-bottom-width: 1px;
   border-color: #eee;
 `;
@@ -39,7 +39,7 @@ export const SubmitButton = styled(RectButton)`
 export const List = styled(FlatList).attrs({
   showsVerticalScrollIndicator: false,
 })`
-  margin-top: 15px;
+  margin-top: 5px;
 `;
 
 export const User = styled.View`

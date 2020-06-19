@@ -65,7 +65,19 @@ export default class User extends Component {
         </Header>
 
         {loading ? (
-          <ActivityIndicator color="#5063f0" />
+          <ActivityIndicator
+            color="#5063f0"
+            size="large"
+            style={{
+              position: 'absolute',
+              left: 0,
+              right: 0,
+              top: 0,
+              bottom: 0,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          />
         ) : (
           <Repos
             data={repos}

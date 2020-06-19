@@ -9,7 +9,7 @@ export const Container = styled.View`
 
 export const Header = styled.View`
   align-items: center;
-  padding-bottom: 20px;
+  padding-bottom: 5px;
   border-bottom-width: 1px;
   border-color: #eee;
 `;
@@ -39,7 +39,7 @@ export const Bio = styled.Text`
 export const Repos = styled(FlatList).attrs({
   showsVerticalScrollIndicator: false,
 })`
-  margin-top: 15px;
+  margin-top: 5px;
 `;
 
 export const Repo = styled.View`
