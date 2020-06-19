@@ -90,7 +90,9 @@ export default class User extends Component {
                     {item.name}
                   </RepoName>
                 </HeaderRepo>
-                <Info>{item.description}</Info>
+                <Info onPress={() => this.handleNavigate(item)}>
+                  {item.description}
+                </Info>
               </Repo>
             )}
           />

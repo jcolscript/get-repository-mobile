@@ -97,17 +97,6 @@ export default class Main extends Component {
     navigation.navigate('User', { user });
   };
 
-  handleRemove = (login) => {
-    const { users } = this.state;
-    const data = users;
-
-    const userIndex = users.findIndex((item) => item.login === login);
-
-    data.splice(userIndex, 1);
-
-    this.setState({ users: [data] });
-  };
-
   render() {
     const { newUser, users, loading, error } = this.state;
 
@@ -142,7 +131,6 @@ export default class Main extends Component {
                 size={20}
                 color="#999"
                 style={{ position: 'absolute', top: 10, left: '96%' }}
-                onPress={() => this.handleRemove(item.login)}
               />
               <Header>
                 <Avatar source={{ uri: item.avatar }} />
