@@ -61,6 +61,10 @@ export default class Main extends Component {
     this.setState({ loading: true, error: false });
 
     try {
+      if (!newUser) {
+        throw new Error('Nome de usuario vazio');
+      }
+
       const hasDuplicate = users.find((user) => user.name === newUser);
 
       if (hasDuplicate) {
