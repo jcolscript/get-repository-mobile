@@ -34,6 +34,7 @@ export default class Main extends Component {
     newUser: '',
     users: [],
     loading: false,
+    error: false,
   };
 
   async componentDidMount() {
@@ -57,24 +58,37 @@ export default class Main extends Component {
   handleAddUser = async () => {
     const { users, newUser } = this.state;
 
-    this.setState({ loading: true });
+    this.setState({ loading: true, error: false });
 
-    const response = await api.get(`/users/${newUser}`);
+    try {
+      const hasDuplicate = users.find((user) => user.name === newUser);
 
-    const data = {
-      name: response.data.name,
-      login: response.data.login,
-      bio: response.data.bio,
-      avatar: response.data.avatar_url,
-    };
+      if (hasDuplicate) {
+        throw new Error('Repositório duplicado');
+      }
 
-    this.setState({
-      users: [...users, data],
-      newUser: '',
-      loading: false,
-    });
+      const response = await api.get(`/users/${newUser}`);
 
-    Keyboard.dismiss();
+      const data = {
+        name: response.data.name,
+        login: response.data.login,
+        bio: response.data.bio,
+        avatar: response.data.avatar_url,
+      };
+
+      this.setState({
+        users: [...users, data],
+        newUser: '',
+        loading: false,
+      });
+
+      Keyboard.dismiss();
+    } catch (error) {
+      this.setState({ error: true });
+    } finally {
+      this.setState({ loading: false });
+      Keyboard.dismiss();
+    }
   };
 
   handleNavigate = (user) => {
@@ -84,7 +98,7 @@ export default class Main extends Component {
   };
 
   render() {
-    const { newUser, users, loading } = this.state;
+    const { newUser, users, loading, error } = this.state;
 
     return (
       <Container>
@@ -97,6 +111,7 @@ export default class Main extends Component {
             onChangeText={(text) => this.setState({ newUser: text })}
             returnKeyType="send"
             onSubmitEditing={this.handleAddUser}
+            error={error ? 1 : 0}
           />
           <SubmitButton loading={loading} onPress={this.handleAddUser}>
             {loading ? (
